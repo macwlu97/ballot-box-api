@@ -1,16 +1,22 @@
 package com.ballotbox.ballot_box_api.domain.model;
 
 import com.ballotbox.ballot_box_api.domain.exception.DomainException;
-
 import java.util.*;
 
 /**
- * Election Aggregate. Manages voting logic within a specific instance.
+ * Domain record representing an Election instance.
+ * Note: Uses mutable collections passed from the persistence layer for simplicity.
  */
-public record Election(UUID id, String title, List<String> candidates, Set<UUID> votersWhoVoted) {
+public record Election(
+        UUID id,
+        String title,
+        List<String> candidates,
+        Set<UUID> votersWhoVoted,
+        Map<String, Integer> results // Stores the vote count per candidate
+) {
     /**
-     * Core business logic for casting a vote.
-     * Ensures candidate validity and prevents double voting.
+     * Executes the voting logic.
+     * Validates voter eligibility and candidate existence before updating state.
      */
     public void castVote(UUID voterId, String candidateName) {
         if (votersWhoVoted.contains(voterId)) {
@@ -19,6 +25,9 @@ public record Election(UUID id, String title, List<String> candidates, Set<UUID>
         if (!candidates.contains(candidateName)) {
             throw new DomainException("Candidate " + candidateName + " does not exist in this election.");
         }
+
+        // Update the mutable collections linked to the Entity
         votersWhoVoted.add(voterId);
+        results.merge(candidateName, 1, Integer::sum);
     }
 }

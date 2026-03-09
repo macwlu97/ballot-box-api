@@ -1,6 +1,5 @@
 package com.ballotbox.ballot_box_api.domain.service;
 
-
 import com.ballotbox.ballot_box_api.domain.exception.DomainException;
 import com.ballotbox.ballot_box_api.domain.model.Election;
 import com.ballotbox.ballot_box_api.domain.model.Voter;

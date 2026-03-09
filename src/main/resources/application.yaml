@@ -1,3 +1,50 @@
 spring:
   application:
     name: ballot-box-api
+
+  datasource:
+    # H2 In-memory database configuration
+    url: jdbc:h2:mem:votingdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      # Access H2 console at http://localhost:8080/h2-console
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      # Automatically creates/updates the database schema
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+
+server:
+  port: 8080
+  error:
+    # Don't reveal internal details in error responses
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+
+logging:
+  level:
+    root: INFO
+    com.ballotbox.ballot_box_api: DEBUG
+    # Logs SQL parameters for debugging
+    org.hibernate.orm.jdbc.bind: TRACE
+
+# Custom properties if needed
+app:
+  version: 1.0.0

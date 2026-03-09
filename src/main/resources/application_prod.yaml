@@ -1,0 +1,18 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  
+  datasource:
+    # 'db' is the service name defined in docker-compose.yml
+    url: jdbc:postgresql://db:5432/ballotbox
+    username: user
+    password: pass
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        # Optimization for PostgreSQL
+        jdbc.lob.non_contextual_creation: true

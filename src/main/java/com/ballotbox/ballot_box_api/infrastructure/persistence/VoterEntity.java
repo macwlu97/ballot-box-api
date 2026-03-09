@@ -27,6 +27,7 @@ public class VoterEntity {
      * Maps the database entity to a clean domain record.
      */
     public Voter toDomain() {
+        // Maps 'blocked' from DB to 'isBlocked' in the Record
         return new Voter(id, name, blocked);
     }
 
@@ -37,4 +38,5 @@ public class VoterEntity {
         entity.setBlocked(voter.isBlocked());
         return entity;
     }
+
 }

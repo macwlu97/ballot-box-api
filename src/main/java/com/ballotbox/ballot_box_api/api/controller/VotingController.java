@@ -15,9 +15,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 class VotingController {
     private final VotingService service;
+
+    public VotingController(VotingService service) {
+        this.service = service;
+    }
 
     @PostMapping("/voters")
     public ResponseEntity<Map<String, UUID>> registerVoter(@RequestBody @Valid CreateVoterRequest req) {

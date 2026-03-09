@@ -1,5 +1,8 @@
 package com.ballotbox.ballot_box_api.api.integration;
 
+import com.ballotbox.ballot_box_api.api.dto.CreateElectionRequest;
+import com.ballotbox.ballot_box_api.api.dto.CreateVoterRequest;
+import com.ballotbox.ballot_box_api.api.dto.VoteRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
