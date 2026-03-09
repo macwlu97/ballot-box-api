@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Verifies:
  * 1. Voter management (blocking/unblocking).
  * 2. Election management (instances and options).
- * 3. Voting process (single vote constraint, valid candidate validation).
+ * 3. Voting process (single vote constraint, valid candidate validation, result tallying).
  */
 public class VotingSystemDomainTests {
 
@@ -54,7 +54,8 @@ public class VotingSystemDomainTests {
                 UUID.randomUUID(),
                 "Mayor Election 2025",
                 List.of("Candidate A", "Candidate B"),
-                new HashSet<>()
+                new HashSet<>(),
+                new HashMap<>() // Fixed: Added results map to constructor
         );
 
         // When
@@ -75,7 +76,8 @@ public class VotingSystemDomainTests {
                 UUID.randomUUID(),
                 "City Council",
                 List.of("Candidate X"),
-                new HashSet<>()
+                new HashSet<>(),
+                new HashMap<>() // Fixed: Added results map to constructor
         );
 
         // When & Then
@@ -90,8 +92,9 @@ public class VotingSystemDomainTests {
     void shouldAllowVotingInDifferentElectionInstances() {
         // Given
         UUID voterId = UUID.randomUUID();
-        Election election1 = new Election(UUID.randomUUID(), "Election A", List.of("C1"), new HashSet<>());
-        Election election2 = new Election(UUID.randomUUID(), "Election B", List.of("C2"), new HashSet<>());
+        // Fixed: Added results map to both constructors
+        Election election1 = new Election(UUID.randomUUID(), "Election A", List.of("C1"), new HashSet<>(), new HashMap<>());
+        Election election2 = new Election(UUID.randomUUID(), "Election B", List.of("C2"), new HashSet<>(), new HashMap<>());
 
         // When & Then
         assertDoesNotThrow(() -> election1.castVote(voterId, "C1"));
@@ -101,7 +104,7 @@ public class VotingSystemDomainTests {
         assertTrue(election2.votersWhoVoted().contains(voterId));
     }
 
-    // --- DATA INTEGRITY ---
+    // --- DATA INTEGRITY & RESULTS ---
 
     @Test
     @DisplayName("LOGIC: Should correctly record the voter ID in the instance registry after a successful vote")
@@ -112,7 +115,8 @@ public class VotingSystemDomainTests {
                 UUID.randomUUID(),
                 "Referendum",
                 List.of("YES", "NO"),
-                new HashSet<>()
+                new HashSet<>(),
+                new HashMap<>() // Fixed: Added results map to constructor
         );
 
         // When
@@ -121,5 +125,27 @@ public class VotingSystemDomainTests {
         // Then
         assertEquals(1, election.votersWhoVoted().size());
         assertTrue(election.votersWhoVoted().contains(voterId));
+    }
+
+    @Test
+    @DisplayName("LOGIC: Should increment vote count for the chosen candidate")
+    void shouldIncrementCandidateVoteCount() {
+        // Given
+        Election election = new Election(
+                UUID.randomUUID(),
+                "Test Election",
+                List.of("Candidate A", "Candidate B"),
+                new HashSet<>(),
+                new HashMap<>() // Fixed: Added results map to constructor
+        );
+
+        // When
+        election.castVote(UUID.randomUUID(), "Candidate A");
+        election.castVote(UUID.randomUUID(), "Candidate A");
+        election.castVote(UUID.randomUUID(), "Candidate B");
+
+        // Then
+        assertEquals(2, election.results().get("Candidate A"));
+        assertEquals(1, election.results().get("Candidate B"));
     }
 }
