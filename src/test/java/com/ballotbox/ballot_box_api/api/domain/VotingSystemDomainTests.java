@@ -1,5 +1,8 @@
 package com.ballotbox.ballot_box_api.api.domain;
 
+import com.ballotbox.ballot_box_api.domain.exception.DomainException;
+import com.ballotbox.ballot_box_api.domain.model.Election;
+import com.ballotbox.ballot_box_api.domain.model.Voter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

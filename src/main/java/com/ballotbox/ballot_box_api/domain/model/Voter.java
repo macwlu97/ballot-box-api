@@ -1,4 +1,6 @@
-package com.ballotbox.ballot_box_api.domain;
+package com.ballotbox.ballot_box_api.domain.model;
+
+import com.ballotbox.ballot_box_api.domain.exception.DomainException;
 
 import java.util.*;
 

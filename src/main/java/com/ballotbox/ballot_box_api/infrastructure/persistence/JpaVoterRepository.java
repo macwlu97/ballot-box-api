@@ -5,4 +5,4 @@ import org.springframework.stereotype.Repository;            // Stereotype for p
 import java.util.UUID;                                       // ID type
 
 @Repository
-interface JpaVoterRepository extends JpaRepository<VoterEntity, UUID> {}
+public interface JpaVoterRepository extends JpaRepository<VoterEntity, UUID> {}

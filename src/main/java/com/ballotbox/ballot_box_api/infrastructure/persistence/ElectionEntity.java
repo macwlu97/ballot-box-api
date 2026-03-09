@@ -1,6 +1,6 @@
 package com.ballotbox.ballot_box_api.infrastructure.persistence;
 
-import com.ballotbox.ballot_box_api.domain.Election;
+import com.ballotbox.ballot_box_api.domain.model.Election;
 import jakarta.persistence.*; // Includes @Entity, @Table, @Id, @GeneratedValue, @Column, @ElementCollection, etc.
 import lombok.Getter;           // Lombok for getters
 import lombok.NoArgsConstructor; // Lombok for empty constructor
@@ -16,7 +16,7 @@ import java.util.UUID;          // Required for UUID type
 @Table(name = "elections")
 @Getter @Setter
 @NoArgsConstructor
-class ElectionEntity {
+public class ElectionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

@@ -4,4 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository; // Core JPA reposi
 import org.springframework.stereotype.Repository;            // Stereotype for persistence layer
 import java.util.UUID;                                       // ID type
 
-@Repository interface JpaElectionRepository extends JpaRepository<ElectionEntity, UUID> {}
+@Repository
+public interface JpaElectionRepository extends JpaRepository<ElectionEntity, UUID> {}

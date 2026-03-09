@@ -1,6 +1,6 @@
 package com.ballotbox.ballot_box_api.infrastructure.persistence;
 
-import com.ballotbox.ballot_box_api.domain.Voter;
+import com.ballotbox.ballot_box_api.domain.model.Voter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @Table(name = "voters")
 @Getter @Setter
 @NoArgsConstructor
-class VoterEntity {
+public class VoterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
